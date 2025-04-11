@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Benh Thanh Metro System";
+}
+<style>
+    #suggestions , #searchBox {
+        width: 80%; /* Match the width of the search box */
+        max-width: 600px; /* Match the max-width of the search box */
+        margin: 0 auto; /* Center the suggestions under the search box *//
+    }
+
+</style>
+
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Index", "Home")">
+            <i class="fas fa-home fa-2x"></i>
+        </a>
+        <div>English <i class="fas fa-regular fa-globe fa-2x"></i></div>
+    </div>
+
+    <p class="text-center">Please enter your destination.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-10">
+            <input type="text" class="form-control mx-auto" id="searchBox" placeholder="Lotte Mart" autocomplete="off" style="width: 80%; max-width: 600px;" />
+
+        </div>
+    </div>
+</div>
+<ul id="suggestions" class="list-group mt-2"></ul>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("input", function () {
+            var query = $(this).val();
+            if (query.length > 0) {
+                $("#suggestions").css("width", $("#searchBox").outerWidth());
+                $.getJSON('/Metro/Search', { term: query }, function (data) {
+                    var suggestions = $("#suggestions");
+                    suggestions.empty();
+                    data.forEach(function (item) {
+                        suggestions.append(
+                            `<li class="list-group-item">
+                                <span style="font-weight:bold">${item.name}</span>
+
+                               <a href="/Home/Details?id=${item.id}&value=${encodeURIComponent(item.name)}">
+                                    <span style="float:right;">➡️</span>
+                                </a>
+
+                            </li>`
+                        );
+                    });
+                });
+            } else {
+                $("#suggestions").empty();
+            }
+        });
+    });
+</script>
+

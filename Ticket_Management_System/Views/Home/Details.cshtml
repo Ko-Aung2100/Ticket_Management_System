@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+@{
+    TempData["From"] = Model.From;
+    TempData["To"] = Model.To;
+    TempData["ToID"] = Model.ToID;
+    TempData["TicketCost"] = Model.TicketCost;
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Index", "Home")">
+            <i class="fas fa-home fa-2x"></i>
+        </a>
+        <div>English <i class="fas fa-regular fa-globe fa-2x"></i></div>
+    </div>
+
+    <h2 class="header text-center mb-4">Benh Thanh Metro System</h2>
+
+    <div class="mb-3">
+        <label class="form-label">Your location</label>
+        <div class="ticket-cost">@Model.From</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">You want to go to</label>
+        <div class="ticket-cost">@Model.To</div>
+    </div>
+
+    <div class="mb-3">
+        <label>Your ticket costs:</label>
+        <div class="ticket-cost">@Model.TicketCost</div>
+    </div>
+
+    <h5 class="mt-4 mb-3">Choose Payment Method:</h5>
+
+    <div class="row text-center">
+        <div class="col-6">
+            <div class="pay-method">
+                <a href="@Url.Action("Card", "Metro")">
+                    <img src="~/Content/images/card.png" class="img-fluid w-50" alt="Card Payment" />
+                </a>
+                <div>pay with cards</div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="pay-method">
+                <a href="@Url.Action("Momo", "Metro")">
+                <img src="~/Content/images/momo.jpg" class="img-fluid w-50" alt="Momo Payment" /></a>
+                <div>pay with momo</div>
+            </div>
+        </div>
+    </div>
+

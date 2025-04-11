@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Ticket_Management_System.Models.vw_TicketDetails>
+
+@{
+    ViewBag.Title = "Show Tickets";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="@Url.Action("Index", "Home")">
+        <i class="fas fa-home fa-2x"></i>
+    </a>
+    <div>English <i class="fas fa-regular fa-globe fa-2x"></i></div>
+</div>
+
+    <h2 class="mb-4">Your Tickets</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var ticket in Model)
+        {
+            <div class="col">
+                <div class="card border-0 shadow rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3 text-primary">🎫 Ticket #@ticket.TicketID</h5>
+
+                        <div class="mb-2">
+                            <strong>From:</strong> @ticket.FromLocation
+                        </div>
+                        <div class="mb-2">
+                            <strong>To:</strong> @ticket.ToLocation
+                        </div>
+                        <div class="mb-2">
+                            <strong>Departure:</strong> @ticket.DepartureTime
+                        </div>
+                        <div class="mb-2">
+                            <strong>Cost:</strong> $@ticket.TicketCost
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ticket_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DESTINATIONS">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Name="DID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="text" />
+        </EntityType>
+        <EntityType Name="TERMINALS">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="int" Nullable="false" />
+          <Property Name="CODE" Type="int" />
+        </EntityType>
+        <EntityType Name="TICKETS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="TID" Type="int" />
+          <Property Name="DID" Type="int" />
+          <Property Name="COST" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FROM" Type="text" />
+          <Property Name="TIME" Type="datetime" />
+          <Property Name="STATUS" Type="bit" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ticket_management_system.dbo.vw_TicketDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_TicketDetails">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="int" Nullable="false" />
+          <Property Name="FromLocation" Type="text" />
+          <Property Name="ToLocation" Type="text" />
+          <Property Name="TicketCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DepartureTime" Type="datetime" />
+          <Property Name="TicketStatus" Type="bit" />
+        </EntityType>
+        <Association Name="FK_TICKETS_RELATIONS_DESTINAT">
+          <End Role="DESTINATIONS" Type="Self.DESTINATIONS" Multiplicity="0..1" />
+          <End Role="TICKETS" Type="Self.TICKETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESTINATIONS">
+              <PropertyRef Name="DID" />
+            </Principal>
+            <Dependent Role="TICKETS">
+              <PropertyRef Name="DID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKETS_RELATIONS_TERMINAL">
+          <End Role="TERMINALS" Type="Self.TERMINALS" Multiplicity="0..1" />
+          <End Role="TICKETS" Type="Self.TICKETS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINALS">
+              <PropertyRef Name="TID" />
+            </Principal>
+            <Dependent Role="TICKETS">
+              <PropertyRef Name="TID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ticket_management_systemModelStoreContainer">
+          <EntitySet Name="DESTINATIONS" EntityType="Self.DESTINATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TERMINALS" EntityType="Self.TERMINALS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKETS" EntityType="Self.TICKETS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_TicketDetails" EntityType="Self.vw_TicketDetails" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_TicketDetails].[TicketID] AS [TicketID], 
+    [vw_TicketDetails].[FromLocation] AS [FromLocation], 
+    [vw_TicketDetails].[ToLocation] AS [ToLocation], 
+    [vw_TicketDetails].[TicketCost] AS [TicketCost], 
+    [vw_TicketDetails].[DepartureTime] AS [DepartureTime], 
+    [vw_TicketDetails].[TicketStatus] AS [TicketStatus]
+    FROM [dbo].[vw_TicketDetails] AS [vw_TicketDetails]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_TICKETS_RELATIONS_DESTINAT" Association="Self.FK_TICKETS_RELATIONS_DESTINAT">
+            <End Role="DESTINATIONS" EntitySet="DESTINATIONS" />
+            <End Role="TICKETS" EntitySet="TICKETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKETS_RELATIONS_TERMINAL" Association="Self.FK_TICKETS_RELATIONS_TERMINAL">
+            <End Role="TERMINALS" EntitySet="TERMINALS" />
+            <End Role="TICKETS" EntitySet="TICKETS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ticket_management_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DESTINATION">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Name="DID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TICKETS" Relationship="Self.FK_TICKETS_RELATIONS_DESTINAT" FromRole="DESTINATIONS" ToRole="TICKETS" />
+        </EntityType>
+        <EntityType Name="TERMINAL">
+          <Key>
+            <PropertyRef Name="TID" />
+          </Key>
+          <Property Name="TID" Type="Int32" Nullable="false" />
+          <Property Name="CODE" Type="Int32" />
+          <NavigationProperty Name="TICKETS" Relationship="Self.FK_TICKETS_RELATIONS_TERMINAL" FromRole="TERMINALS" ToRole="TICKETS" />
+        </EntityType>
+        <EntityType Name="TICKET">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TID" Type="Int32" />
+          <Property Name="DID" Type="Int32" />
+          <Property Name="COST" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FROM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TIME" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="Boolean" />
+          <NavigationProperty Name="DESTINATION" Relationship="Self.FK_TICKETS_RELATIONS_DESTINAT" FromRole="TICKETS" ToRole="DESTINATIONS" />
+          <NavigationProperty Name="TERMINAL" Relationship="Self.FK_TICKETS_RELATIONS_TERMINAL" FromRole="TICKETS" ToRole="TERMINALS" />
+        </EntityType>
+        <Association Name="FK_TICKETS_RELATIONS_DESTINAT">
+          <End Role="DESTINATIONS" Type="Self.DESTINATION" Multiplicity="0..1" />
+          <End Role="TICKETS" Type="Self.TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESTINATIONS">
+              <PropertyRef Name="DID" />
+            </Principal>
+            <Dependent Role="TICKETS">
+              <PropertyRef Name="DID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKETS_RELATIONS_TERMINAL">
+          <End Role="TERMINALS" Type="Self.TERMINAL" Multiplicity="0..1" />
+          <End Role="TICKETS" Type="Self.TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TERMINALS">
+              <PropertyRef Name="TID" />
+            </Principal>
+            <Dependent Role="TICKETS">
+              <PropertyRef Name="TID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ticket_management_systemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DESTINATIONS" EntityType="Self.DESTINATION" />
+          <EntitySet Name="TERMINALS" EntityType="Self.TERMINAL" />
+          <EntitySet Name="TICKETS" EntityType="Self.TICKET" />
+          <AssociationSet Name="FK_TICKETS_RELATIONS_DESTINAT" Association="Self.FK_TICKETS_RELATIONS_DESTINAT">
+            <End Role="DESTINATIONS" EntitySet="DESTINATIONS" />
+            <End Role="TICKETS" EntitySet="TICKETS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKETS_RELATIONS_TERMINAL" Association="Self.FK_TICKETS_RELATIONS_TERMINAL">
+            <End Role="TERMINALS" EntitySet="TERMINALS" />
+            <End Role="TICKETS" EntitySet="TICKETS" />
+          </AssociationSet>
+          <EntitySet Name="vw_TicketDetails" EntityType="ticket_management_systemModel.vw_TicketDetails" />
+        </EntityContainer>
+        <EntityType Name="vw_TicketDetails">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="Int32" Nullable="false" />
+          <Property Name="FromLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ToLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TicketCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DepartureTime" Type="DateTime" Precision="3" />
+          <Property Name="TicketStatus" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ticket_management_systemModelStoreContainer" CdmEntityContainer="ticket_management_systemEntities1">
+          <EntitySetMapping Name="DESTINATIONS">
+            <EntityTypeMapping TypeName="ticket_management_systemModel.DESTINATION">
+              <MappingFragment StoreEntitySet="DESTINATIONS">
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TERMINALS">
+            <EntityTypeMapping TypeName="ticket_management_systemModel.TERMINAL">
+              <MappingFragment StoreEntitySet="TERMINALS">
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKETS">
+            <EntityTypeMapping TypeName="ticket_management_systemModel.TICKET">
+              <MappingFragment StoreEntitySet="TICKETS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="COST" ColumnName="COST" />
+                <ScalarProperty Name="FROM" ColumnName="FROM" />
+                <ScalarProperty Name="TIME" ColumnName="TIME" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_TicketDetails">
+            <EntityTypeMapping TypeName="ticket_management_systemModel.vw_TicketDetails">
+              <MappingFragment StoreEntitySet="vw_TicketDetails">
+                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="TicketCost" ColumnName="TicketCost" />
+                <ScalarProperty Name="ToLocation" ColumnName="ToLocation" />
+                <ScalarProperty Name="FromLocation" ColumnName="FromLocation" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

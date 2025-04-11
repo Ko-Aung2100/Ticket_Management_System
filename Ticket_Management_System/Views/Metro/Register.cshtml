@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Index", "Home")">
+            <i class="fas fa-home fa-2x"></i>
+        </a>
+        <div>English <i class="fas fa-regular fa-globe fa-2x"></i></div>
+    </div>
+
+    <img src="~/Content/images/success.png" class="img-fluid w-25 d-block mx-auto" alt="Success" />
+    <h5 class="mt-4 mb-3 text-center">Payment Successful</h5>
+
+  
+        <div class="text-center">
+            <a href="@Url.Action("ShowTickets", "Metro")" class="btn" style="background-color: #5f5fc4; color: white;">Check Your Ticket</a>
+        </div>
+    
+</div>
+

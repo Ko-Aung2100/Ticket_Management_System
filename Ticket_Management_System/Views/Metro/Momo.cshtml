@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Momo";
+    string from = TempData["From"] as string;
+    string to = TempData["To"] as string;
+    var ticketCost = TempData["TicketCost"];
+    var toID = TempData["ToID"];
+
+    // Rehydrate TempData
+    TempData["From"] = from;
+    TempData["To"] = to;
+    TempData["TicketCost"] = ticketCost;
+    TempData["ToID"] = toID;
+}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Index", "Home")">
+            <i class="fas fa-home fa-2x"></i>
+        </a>
+        <div>English <i class="fas fa-regular fa-globe fa-2x"></i></div>
+    </div>
+    <div>
+        <p class="text-center">Please Scan the QR code to Pay.</p>
+        <a href="@Url.Action("Register", "Metro", new { from = TempData["From"], to = TempData["ToID"], ticketCost = TempData["TicketCost"] })">
+            <img src="~/Content/images/QR.png" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+        </a>
+    </div>
+
+</div>
+

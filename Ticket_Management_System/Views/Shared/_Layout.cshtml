@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Benh Thanh Metro Ticket Selling System</title>
+    <script src="https://kit.fontawesome.com/08db25eced.js" crossorigin="anonymous"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    
+    <div class="container body-content">
+        <h1 class="text-center my-5">Benh Thanh Metro System</h1>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="text-center">Copy Right &copy 2025 By AW company</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

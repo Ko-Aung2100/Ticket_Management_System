@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e106faa55ecc4f73b14e80c3359e49f3" Name="Diagram1">
+        <EntityTypeShape EntityType="ticket_management_systemModel.DESTINATION" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ticket_management_systemModel.TERMINAL" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ticket_management_systemModel.TICKET" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="ticket_management_systemModel.FK_TICKETS_RELATIONS_DESTINAT" ManuallyRouted="false" />
+        <AssociationConnector Association="ticket_management_systemModel.FK_TICKETS_RELATIONS_TERMINAL" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ticket_management_systemModel.vw_TicketDetails" Width="1.5" PointX="3.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
